@@ -54,22 +54,19 @@ const AuthForm = () => {
         setLoading(false);
         if (res.ok) {
           return res.json();
-        } else {
-          res.json.then((data) => {
-            let errorMessage = "Authentication failed";
-            console.log(data);
-            throw new Error(errorMessage);
-          });
         }
       })
       .then((data) => {
         console.log(data.idToken);
         setIsLogin(true);
-        authCtx.login(data.idToken);
+        const loginEmail = enteredEmail.replace(/[^a-zA-Z ]/g, "");
+        authCtx.login(data.idToken, loginEmail);
         navigate("/home", { replace: true });
       })
       .catch((err) => {
-        alert(err.message);
+        let errorMessage = "authentication failed";
+        console.log(err.message);
+        alert(errorMessage);
       });
     emailInputRef.current.value = "";
     passwordInputRef.current.value = "";
@@ -105,6 +102,7 @@ const AuthForm = () => {
           )}
         </div>
         <div className={classes.actions}>
+          {isLogin && <p>Forgot Password</p>}
           <button>{loading ? "loading" : isLogin ? "login" : "Sign up"}</button>
           <button type="button" onClick={switchAuthModeHandler}>
             {isLogin ? "create new account" : "login with existing account"}

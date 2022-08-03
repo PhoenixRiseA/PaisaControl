@@ -1,7 +1,7 @@
 .footer {
   width: 80%;
   height: 7rem;
-  background-color: #0e0404;
+  background-color: blanchedalmond;
   padding: 0 10%;
   display: flow-root;
   align-items: center;
@@ -36,7 +36,7 @@
 }
 
 .footer a {
-  color: white;
+  color: rgb(12, 12, 12);
   text-decoration: none;
 }
 

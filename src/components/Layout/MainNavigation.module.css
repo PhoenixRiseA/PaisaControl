@@ -29,12 +29,14 @@
 
 .header li {
   margin: 0 1rem;
-  width: 5rem;
+  width: auto;
+  margin: 1rem;
 }
 
 .header a {
-  color: white;
+  color: rgb(14, 2, 2);
   text-decoration: none;
+  margin: 1rem;
 }
 
 .header a:hover,
@@ -43,4 +45,25 @@
   color: #95bcf0;
   padding-bottom: 0.25rem;
   border-bottom: 4px solid #95bcf0;
+  margin: 1rem;
+}
+
+.header button {
+  color: rgb(14, 2, 2);
+  text-decoration: none;
+  border-radius: 0.5rem;
+  background-color: #95bcf0;
+  size: 5rem;
+  width: 5rem;
+  height: 2rem;
+  margin-left: 15rem;
+}
+
+.header button:hover,
+.header button:active,
+.header button.active {
+  color: #dee3e9;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid #95bcf0;
+  width: 5rem;
 }

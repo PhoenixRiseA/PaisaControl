@@ -49,11 +49,13 @@
 .actions button {
   cursor: pointer;
   font: inherit;
-  color: white;
-  background-color: #5c43ca;
-  border: 1px solid #5c43ca;
+  color: rgb(17, 15, 15);
+  background-color: blanchedalmond;
+  border: 1px solid blanchedalmond;
   border-radius: 4px;
   padding: 0.5rem 2.5rem;
+  margin: 0.5rem;
+  width: 15rem;
 }
 
 .actions button:hover {
