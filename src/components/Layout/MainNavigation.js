@@ -12,6 +12,16 @@ const MainNavigation = () => {
         {authCtx.isLoggedIn && <h2>Welcome to expense tracker!</h2>}
         {authCtx.isLoggedIn && (
           <li>
+            <NavLink
+              className={(navData) => (navData.isActive ? classes.active : "")}
+              to="/home"
+            >
+              Home
+            </NavLink>
+          </li>
+        )}
+        {authCtx.isLoggedIn && (
+          <li>
             Your profile is incomplete
             <NavLink
               className={(navData) => (navData.isActive ? classes.active : "")}
