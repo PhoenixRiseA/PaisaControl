@@ -1,6 +1,6 @@
 import classes from "./UserDetails.module.css";
 import { useNavigate } from "react-router-dom";
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useEffect } from "react";
 
 import AuthContext from "../store/AuthContext";
 const UserDetails = () => {
@@ -11,8 +11,37 @@ const UserDetails = () => {
   };
   const nameRef = useRef();
   const profilePhotoUrlRef = useRef();
+  useEffect(() => {
+    fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAfEMJNUWanJky-jYSDG0n0CpMrB2rKz04",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          idToken: authCtx.token,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        nameRef.current.value = data.users[0].displayName;
+        profilePhotoUrlRef.current.value = data.users[0].photoUrl;
+      })
+      .catch((err) => {
+        let errorMessage = "failed to get details";
+        alert(errorMessage);
+        throw new Error(err.message);
+      });
+  }, [authCtx.token]);
 
-  const updateProfileHandler = (event) => {
+  const UpdateProfileHandler = (event) => {
     event.preventDefault();
     const enteredName = nameRef.current.value;
     const enteredProfilePhotoUrl = profilePhotoUrlRef.current.value;
@@ -52,11 +81,11 @@ const UserDetails = () => {
         <h3>Contact details</h3>
         <button onClick={cancelHandler}>Cancel</button>
       </div>
-      <form onSubmit={updateProfileHandler}>
-        <div className={classes.input}>
-          <label htmlFor="FullName">Full Name</label>
+      <form onSubmit={UpdateProfileHandler} className={classes.form}>
+        <div>
+          <label htmlFor="FullName">Full Name:</label>
           <input type="text" ref={nameRef} required />
-          <label htmlFor="photoUrl">Profile Photo URL</label>
+          <label htmlFor="photoUrl">Profile Photo URL:</label>
           <input type="text" ref={profilePhotoUrlRef} required />
         </div>
         <div className={classes.actions}>
