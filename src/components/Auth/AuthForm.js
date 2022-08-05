@@ -14,6 +14,7 @@ const AuthForm = () => {
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -72,6 +73,35 @@ const AuthForm = () => {
     passwordInputRef.current.value = "";
   };
 
+  const forgotPasswordHandler = (e) => {
+    const enteredEmail = emailInputRef.current.value;
+    e.preventDefault();
+    fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAfEMJNUWanJky-jYSDG0n0CpMrB2rKz04",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          requestType: "PASSWORD_RESET",
+          email: enteredEmail,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => console.log(data))
+      .catch((err) => {
+        let errorMessage = "Could not send verification email try again";
+        alert(errorMessage);
+        throw new Error(err.message);
+      });
+  };
+
   return (
     <section className={classes.auth}>
       <h1>{isLogin ? "Login" : "Sign up"}</h1>
@@ -102,8 +132,12 @@ const AuthForm = () => {
           )}
         </div>
         <div className={classes.actions}>
-          {isLogin && <p>Forgot Password</p>}
-          <button>{loading ? "loading" : isLogin ? "login" : "Sign up"}</button>
+          {isLogin && (
+            <button onClick={forgotPasswordHandler}>Forgot Password</button>
+          )}
+          <button type="submit">
+            {loading ? "loading" : isLogin ? "login" : "Sign up"}
+          </button>
           <button type="button" onClick={switchAuthModeHandler}>
             {isLogin ? "create new account" : "login with existing account"}
           </button>
