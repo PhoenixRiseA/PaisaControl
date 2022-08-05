@@ -31,6 +31,16 @@ const MainNavigation = () => {
             </NavLink>
           </li>
         )}
+        {authCtx.isLoggedIn && (
+          <li>
+            <NavLink
+              className={(navData) => (navData.isActive ? classes.active : "")}
+              to="/expenses"
+            >
+              Expenses
+            </NavLink>
+          </li>
+        )}
 
         {!authCtx.isLoggedIn && (
           <li>
