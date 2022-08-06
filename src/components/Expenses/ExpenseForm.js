@@ -1,4 +1,10 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import classes from "./ExpenseForm.module.css";
 
 const ExpenseForm = () => {
@@ -6,7 +12,7 @@ const ExpenseForm = () => {
   const descriptionRef = useRef();
   const categoryRef = useRef();
   const [expenseData, setExpenseData] = useState();
-  //   const [firebaseId, setFirebaseId] = useState("");
+  const [status, setStatus] = useState("");
 
   const expenseFormSubmitHandler = (e) => {
     e.preventDefault();
@@ -37,7 +43,8 @@ const ExpenseForm = () => {
       })
       .then((data) => {
         console.log(data);
-        // setFirebaseId(data);
+        setStatus("Post successful");
+        console.log(status);
       })
       .catch((err) => {
         alert(err.message);
@@ -47,6 +54,61 @@ const ExpenseForm = () => {
     descriptionRef.current.value = "";
     categoryRef.current.value = "";
   };
+
+  const deleteHandler = useCallback(
+    (key) => {
+      console.log(key);
+      fetch(
+        `https://react-expense-tracker-6e98f-default-rtdb.firebaseio.com/expenses/${key}.json`,
+        {
+          method: "DELETE",
+        }
+      )
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+        })
+        .then((data) => {
+          setStatus("Delete successful");
+          console.log(data);
+          console.log(status);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    },
+    [status]
+  );
+  const editHandler = useCallback(
+    (key, expense, description, category) => {
+      console.log(key);
+      fetch(
+        `https://react-expense-tracker-6e98f-default-rtdb.firebaseio.com/expenses/${key}.json`,
+        {
+          method: "DELETE",
+        }
+      )
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+        })
+        .then((data) => {
+          setStatus("delete before edit successful");
+          console.log(data);
+          console.log(status);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+
+      expenseRef.current.value = expense;
+      descriptionRef.current.value = description;
+      categoryRef.current.value = category;
+    },
+    [status]
+  );
 
   useEffect(() => {
     fetch(
@@ -69,25 +131,34 @@ const ExpenseForm = () => {
           });
         }
         console.log(loadedData);
+        setStatus("data loaded successfully");
+        console.log(status);
         const expenseList = loadedData.map(
           ({ expense, description, category, key }) => {
             return (
               <li key={key}>
-                Expense:{expense} Description:{description} category:{category}
+                Expense: ${expense} Description: {description} category:
+                {category}{" "}
+                <button onClick={deleteHandler.bind(null, key)}>del</button>
+                <button
+                  onClick={editHandler.bind(
+                    null,
+                    key,
+                    expense,
+                    description,
+                    category
+                  )}
+                >
+                  edit
+                </button>
               </li>
             );
           }
         );
-        setExpenseData(expenseList);
         console.log(expenseList);
+        setExpenseData(expenseList);
       });
-
-    // let parentNode = document.getElementById("expenseList");
-    // let childHtml = `<li id="item${index + 1}">
-    // Expense: ${enteredExpense}, ${enteredDescription}, ${enteredCategory}
-    // </li>`;
-    // parentNode.innerHTML = childHtml + parentNode.innerHTML;
-  }, [setExpenseData]);
+  }, [setExpenseData, deleteHandler, editHandler, status]);
 
   return (
     <Fragment>

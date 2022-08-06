@@ -1,12 +1,14 @@
 .footer {
   width: 80%;
-  height: 7rem;
+  height: 6rem;
   background-color: blanchedalmond;
   padding: 0 10%;
   display: flow-root;
   align-items: center;
   justify-content: center;
   border-radius: 0.1rem;
+  position: fixed;
+  bottom: 0;
 }
 
 .footer nav {
