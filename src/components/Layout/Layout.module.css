@@ -3,5 +3,6 @@
   flex-direction: column;
   height: 100%;
   flex-grow: 1;
-  background-color: aqua;
+  background-color: blanchedalmond;
+  padding: 1rem;
 }

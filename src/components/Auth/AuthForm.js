@@ -1,14 +1,19 @@
 import classes from "./AuthForm.module.css";
-import { useRef, useState, useContext } from "react";
-import AuthContext from "../../store/AuthContext";
+import { useRef, useState } from "react";
+// import AuthContext from "../../store/AuthContext";
 import { useNavigate } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/authReducer";
 const AuthForm = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
 
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const switchAuthModeHandler = () => {
@@ -58,10 +63,12 @@ const AuthForm = () => {
         }
       })
       .then((data) => {
-        console.log(data.idToken);
-        setIsLogin(true);
-        const loginEmail = enteredEmail.replace(/[^a-zA-Z ]/g, "");
-        authCtx.login(data.idToken, loginEmail);
+        // const loginEmail = enteredEmail.replace(/[^a-zA-Z ]/g, "");
+        // authCtx.login(data.idToken, loginEmail);
+        console.log("in authForm", data.idToken);
+        dispatch(
+          authActions.login({ token: data.idToken, email: enteredEmail })
+        );
         navigate("/home", { replace: true });
       })
       .catch((err) => {
@@ -69,6 +76,7 @@ const AuthForm = () => {
         console.log(err.message);
         alert(errorMessage);
       });
+
     emailInputRef.current.value = "";
     passwordInputRef.current.value = "";
   };

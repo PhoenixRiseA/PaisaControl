@@ -1,16 +1,24 @@
 import classes from "./MainNavigation.module.css";
 import { NavLink } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../../store/AuthContext";
+// import { useContext } from "react";
+// import AuthContext from "../../store/AuthContext";
+import { authActions } from "../../store/authReducer";
+import { useDispatch, useSelector } from "react-redux/es/exports";
 
 const MainNavigation = () => {
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
+  const dispatch = useDispatch();
 
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
+
+  const logoutHandler = () => {
+    dispatch(authActions.logout());
+  };
   return (
     <header className={classes.header}>
       <ul>
-        {authCtx.isLoggedIn && <h2>Welcome to expense tracker!</h2>}
-        {authCtx.isLoggedIn && (
+        {isAuth && <h2>Welcome to expense tracker!</h2>}
+        {isAuth && (
           <li>
             <NavLink
               className={(navData) => (navData.isActive ? classes.active : "")}
@@ -20,7 +28,7 @@ const MainNavigation = () => {
             </NavLink>
           </li>
         )}
-        {authCtx.isLoggedIn && (
+        {isAuth && (
           <li>
             Your profile is incomplete
             <NavLink
@@ -31,7 +39,7 @@ const MainNavigation = () => {
             </NavLink>
           </li>
         )}
-        {authCtx.isLoggedIn && (
+        {isAuth && (
           <li>
             <NavLink
               className={(navData) => (navData.isActive ? classes.active : "")}
@@ -42,7 +50,7 @@ const MainNavigation = () => {
           </li>
         )}
 
-        {!authCtx.isLoggedIn && (
+        {!isAuth && (
           <li>
             <NavLink
               className={(navData) => (navData.isActive ? classes.active : "")}
@@ -52,9 +60,9 @@ const MainNavigation = () => {
             </NavLink>
           </li>
         )}
-        {authCtx.isLoggedIn && (
+        {isAuth && (
           <li>
-            <button className={classes.button} onClick={authCtx.logout}>
+            <button className={classes.button} onClick={logoutHandler}>
               Logout
             </button>
           </li>

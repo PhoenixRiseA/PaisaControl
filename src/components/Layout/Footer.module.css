@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 0.1rem;
-  position: fixed;
+  position: relative;
   bottom: 0;
 }
 

@@ -6,8 +6,13 @@ import React, {
   useState,
 } from "react";
 import classes from "./ExpenseForm.module.css";
+import { expenseActions } from "../../store/expenseReducer";
+import { useSelector, useDispatch } from "react-redux";
 
 const ExpenseForm = () => {
+  const dispatch = useDispatch();
+  const totalAmount = useSelector((state) => state.expense.totalAmount);
+  console.log(totalAmount);
   const expenseRef = useRef();
   const descriptionRef = useRef();
   const categoryRef = useRef();
@@ -133,6 +138,9 @@ const ExpenseForm = () => {
         console.log(loadedData);
         setStatus("data loaded successfully");
         console.log(status);
+
+        dispatch(expenseActions.addExpense(loadedData));
+
         const expenseList = loadedData.map(
           ({ expense, description, category, key }) => {
             return (
@@ -158,7 +166,7 @@ const ExpenseForm = () => {
         console.log(expenseList);
         setExpenseData(expenseList);
       });
-  }, [setExpenseData, deleteHandler, editHandler, status]);
+  }, [setExpenseData, deleteHandler, editHandler, status, dispatch]);
 
   return (
     <Fragment>
@@ -193,6 +201,12 @@ const ExpenseForm = () => {
       <div className={classes.display} id="showExpenses">
         <h3>List of expenses:</h3>
         <ul id="expenseList">{expenseData}</ul>
+      </div>
+      <div className={classes.display}>
+        <h3>
+          Total Amount:
+          {totalAmount > 2000 ? <button>Add premium</button> : totalAmount}
+        </h3>
       </div>
     </Fragment>
   );

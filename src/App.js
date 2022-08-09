@@ -2,24 +2,23 @@ import Layout from "./components/Layout/Layout";
 import AuthPage from "./pages/AuthPage";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
-import React, { useContext } from "react";
-import AuthContext from "./store/AuthContext";
+import React from "react";
+// import AuthContext from "./store/AuthContext";
+import { useSelector } from "react-redux";
 import UserDetails from "./pages/UserDetails";
 import ExpensePage from "./pages/ExpensePage";
 function App() {
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  console.log("in App", isAuth);
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<Navigate to="/auth" />} exact></Route>
-        {authCtx.isLoggedIn && <Route path="/home" element={<Home />} />}
-        {authCtx.isLoggedIn && (
-          <Route path="/expenses" element={<ExpensePage />} />
-        )}
-        {!authCtx.isLoggedIn && <Route path="/auth" element={<AuthPage />} />}
-        {authCtx.isLoggedIn && (
-          <Route path="/home/userDetails" element={<UserDetails />} />
-        )}
+        {isAuth && <Route path="/home" element={<Home />} />}
+        {isAuth && <Route path="/expenses" element={<ExpensePage />} />}
+        {!isAuth && <Route path="/auth" element={<AuthPage />} />}
+        {isAuth && <Route path="/home/userDetails" element={<UserDetails />} />}
         <Route path="*" element={<Navigate to="/auth" />}></Route>
       </Routes>
     </Layout>

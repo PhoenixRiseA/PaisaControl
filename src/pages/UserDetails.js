@@ -1,10 +1,13 @@
 import classes from "./UserDetails.module.css";
 import { useNavigate } from "react-router-dom";
-import React, { useRef, useContext, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 
-import AuthContext from "../store/AuthContext";
+// import AuthContext from "../store/AuthContext";
 const UserDetails = () => {
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
+  const idToken = useSelector((state) => state.auth.token);
+  console.log("in userDetails component", idToken);
   const navigate = useNavigate();
   const cancelHandler = () => {
     navigate("/");
@@ -17,7 +20,7 @@ const UserDetails = () => {
       {
         method: "POST",
         body: JSON.stringify({
-          idToken: authCtx.token,
+          idToken: idToken,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +42,7 @@ const UserDetails = () => {
         alert(errorMessage);
         throw new Error(err.message);
       });
-  }, [authCtx.token]);
+  }, [idToken]);
 
   const UpdateProfileHandler = (event) => {
     event.preventDefault();
@@ -51,7 +54,7 @@ const UserDetails = () => {
     fetch(url, {
       method: "POST",
       body: JSON.stringify({
-        idToken: authCtx.token,
+        idToken: idToken,
         displayName: enteredName,
         photoUrl: enteredProfilePhotoUrl,
         returnSecureToken: true,

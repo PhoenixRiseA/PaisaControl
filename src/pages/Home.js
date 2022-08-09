@@ -1,8 +1,12 @@
 import classes from "./Home.module.css";
-import React, { useEffect, useContext, useState, Fragment } from "react";
-import AuthContext from "../store/AuthContext";
+import React, { useEffect, useState, Fragment } from "react";
+// import AuthContext from "../store/AuthContext";
+import { useSelector } from "react-redux";
+
 const Home = () => {
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
+  const token = useSelector((state) => state.auth.token);
+  console.log("in home", token);
   const [isVerified, setIsVerified] = useState(false);
   useEffect(() => {
     fetch(
@@ -10,7 +14,7 @@ const Home = () => {
       {
         method: "POST",
         body: JSON.stringify({
-          idToken: authCtx.token,
+          idToken: token,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -33,7 +37,7 @@ const Home = () => {
         alert(errorMessage);
         throw new Error(err.message);
       });
-  }, [authCtx.token]);
+  }, [token]);
 
   const VerifyEmailHandler = () => {
     fetch(
@@ -45,7 +49,7 @@ const Home = () => {
         },
         body: JSON.stringify({
           requestType: "VERIFY_EMAIL",
-          idToken: authCtx.token,
+          idToken: token,
         }),
       }
     )
