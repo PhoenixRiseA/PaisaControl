@@ -16,6 +16,7 @@ const AuthForm = () => {
   // const authCtx = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
+
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
@@ -70,6 +71,7 @@ const AuthForm = () => {
           authActions.login({ token: data.idToken, email: enteredEmail })
         );
         navigate("/home", { replace: true });
+        console.log("haha");
       })
       .catch((err) => {
         let errorMessage = "authentication failed";

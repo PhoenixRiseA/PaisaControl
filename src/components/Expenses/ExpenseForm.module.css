@@ -9,6 +9,21 @@
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   overflow: auto;
+  color: #001432;
+}
+
+.form-container-dark {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+  align-items: center;
+  background-color: #001432;
+  text-align: center;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  overflow: auto;
+  color: blanchedalmond;
 }
 
 .display {
@@ -19,7 +34,7 @@
   margin: 1rem;
   background-color: blanchedalmond;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 8px rgba(248, 245, 245, 0.25);
 }
 .display li {
   font-size: medium;
@@ -42,6 +57,43 @@
 .display button:hover,
 .display button:active,
 .display button.active {
+  color: #dee3e9;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid #95bcf0;
+  width: 5rem;
+}
+.darkDisplay {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  margin: 1rem;
+  background-color: #001432;
+  color: blanchedalmond;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+.darkDisplay li {
+  font-size: medium;
+
+  font-style: italic;
+}
+.darkDisplay button {
+  position: relative;
+
+  color: rgb(17, 1, 1);
+  text-decoration: none;
+  border-radius: 0.5rem;
+  background-color: rgb(248, 184, 89);
+  size: 5rem;
+  width: 5rem;
+  height: fit-content;
+  margin: 0.3rem;
+}
+
+.darkDisplay button:hover,
+.darkDisplay button:active,
+.darkDisplay button.active {
   color: #dee3e9;
   padding-bottom: 0.25rem;
   border-bottom: 2px solid #95bcf0;

@@ -3,9 +3,11 @@ import classes from "./Footer.module.css";
 import instagramIcon from "../../assets/instagram.png";
 import twitterIcon from "../../assets/twitter.png";
 import youtubeIcon from "../../assets/youtube.png";
+import { useSelector } from "react-redux";
 const Footer = () => {
+  const theme = useSelector((state) => state.theme.theme);
   return (
-    <footer className={classes.footer}>
+    <footer className={theme === "light" ? classes.footer : classes.darkFooter}>
       <ul>
         <li>
           <a

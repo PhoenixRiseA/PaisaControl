@@ -8,14 +8,16 @@ import { useDispatch, useSelector } from "react-redux/es/exports";
 const MainNavigation = () => {
   // const authCtx = useContext(AuthContext);
   const dispatch = useDispatch();
-
+  const theme = useSelector((state) => {
+    return state.theme.theme;
+  });
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
-
+  console.log(theme);
   const logoutHandler = () => {
     dispatch(authActions.logout());
   };
   return (
-    <header className={classes.header}>
+    <header className={theme === "light" ? classes.header : classes.darkHeader}>
       <ul>
         {isAuth && <h2>Welcome to expense tracker!</h2>}
         {isAuth && (

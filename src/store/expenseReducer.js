@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialExpenseState = { expense: [], totalAmount: 0 };
+const initialExpenseState = { expense: [], totalAmount: 0, premium: false };
 
 const expenseSlice = createSlice({
   name: "expenses",
@@ -16,6 +16,9 @@ const expenseSlice = createSlice({
       }
 
       console.log(state.totalAmount);
+    },
+    activatePremium(state) {
+      state.premium = true;
     },
   },
 });

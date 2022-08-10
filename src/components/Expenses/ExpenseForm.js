@@ -8,10 +8,13 @@ import React, {
 import classes from "./ExpenseForm.module.css";
 import { expenseActions } from "../../store/expenseReducer";
 import { useSelector, useDispatch } from "react-redux";
+import { themeActions } from "../../store/themeReducer";
 
 const ExpenseForm = () => {
   const dispatch = useDispatch();
   const totalAmount = useSelector((state) => state.expense.totalAmount);
+  const premium = useSelector((state) => state.expense.premium);
+  console.log(premium);
   console.log(totalAmount);
   const expenseRef = useRef();
   const descriptionRef = useRef();
@@ -168,9 +171,28 @@ const ExpenseForm = () => {
       });
   }, [setExpenseData, deleteHandler, editHandler, status, dispatch]);
 
+  const activatePremiumHandler = (e) => {
+    e.preventDefault();
+    dispatch(expenseActions.activatePremium());
+    console.log(premium);
+  };
+
+  const switchThemeHandler = (e) => {
+    e.preventDefault();
+
+    dispatch(themeActions.switchTheme());
+  };
+  let theme = useSelector((state) => state.theme.theme);
+
   return (
     <Fragment>
-      <div className={classes["form-container"]}>
+      <div
+        className={
+          theme === "light"
+            ? classes["form-container"]
+            : classes["form-container-dark"]
+        }
+      >
         <form onSubmit={expenseFormSubmitHandler}>
           <div className={classes.control}>
             <label htmlFor="expense">Expense Amount</label>
@@ -198,14 +220,32 @@ const ExpenseForm = () => {
           </div>
         </form>
       </div>
-      <div className={classes.display} id="showExpenses">
+      <div
+        className={theme === "light" ? classes.display : classes.darkDisplay}
+        id="showExpenses"
+      >
         <h3>List of expenses:</h3>
         <ul id="expenseList">{expenseData}</ul>
       </div>
-      <div className={classes.display}>
+      <div
+        className={theme === "light" ? classes.display : classes.darkDisplay}
+      >
         <h3>
           Total Amount:
-          {totalAmount > 2000 ? <button>Add premium</button> : totalAmount}
+          {totalAmount > 2000 ? (
+            premium ? (
+              <div>
+                <p>{totalAmount}</p>
+                <button onClick={switchThemeHandler}>
+                  {theme === "light" ? "dark theme" : "light theme"}
+                </button>
+              </div>
+            ) : (
+              <button onClick={activatePremiumHandler}>Activate premium</button>
+            )
+          ) : (
+            totalAmount
+          )}
         </h3>
       </div>
     </Fragment>
