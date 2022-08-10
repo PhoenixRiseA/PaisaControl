@@ -9,6 +9,7 @@ import classes from "./ExpenseForm.module.css";
 import { expenseActions } from "../../store/expenseReducer";
 import { useSelector, useDispatch } from "react-redux";
 import { themeActions } from "../../store/themeReducer";
+import { CSVLink } from "react-csv";
 
 const ExpenseForm = () => {
   const dispatch = useDispatch();
@@ -184,6 +185,13 @@ const ExpenseForm = () => {
   };
   let theme = useSelector((state) => state.theme.theme);
 
+  const data = useSelector((state) => state.expense.expense);
+  const headers = [
+    { label: "expense", key: "expense" },
+    { label: "description", key: "description" },
+    { label: "category", key: "category" },
+  ];
+  const csvReport = { data: data, headers: headers, filename: "expenses.csv" };
   return (
     <Fragment>
       <div
@@ -239,6 +247,7 @@ const ExpenseForm = () => {
                 <button onClick={switchThemeHandler}>
                   {theme === "light" ? "dark theme" : "light theme"}
                 </button>
+                <CSVLink {...csvReport}>Export to CSV</CSVLink>
               </div>
             ) : (
               <button onClick={activatePremiumHandler}>Activate premium</button>
