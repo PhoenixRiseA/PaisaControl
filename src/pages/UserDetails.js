@@ -1,12 +1,14 @@
 import classes from "./UserDetails.module.css";
 import { useNavigate } from "react-router-dom";
 import React, { useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { detailsActions } from "../store/userDetailsReducer";
 
 // import AuthContext from "../store/AuthContext";
 const UserDetails = () => {
   // const authCtx = useContext(AuthContext);
   const idToken = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
   console.log("in userDetails component", idToken);
   const navigate = useNavigate();
   const cancelHandler = () => {
@@ -36,13 +38,14 @@ const UserDetails = () => {
         console.log(data);
         nameRef.current.value = data.users[0].displayName;
         profilePhotoUrlRef.current.value = data.users[0].photoUrl;
+        dispatch(detailsActions.loadDetails(data.users[0]));
       })
       .catch((err) => {
         let errorMessage = "failed to get details";
         alert(errorMessage);
         throw new Error(err.message);
       });
-  }, [idToken]);
+  }, [idToken, dispatch]);
 
   const UpdateProfileHandler = (event) => {
     event.preventDefault();
@@ -79,10 +82,12 @@ const UserDetails = () => {
   };
 
   return (
-    <section>
+    <section className={classes.section}>
       <div className={classes.typeOfDetail}>
         <h3>Contact details</h3>
-        <button onClick={cancelHandler}>Cancel</button>
+        <button className={classes.actions} onClick={cancelHandler}>
+          Cancel
+        </button>
       </div>
       <form onSubmit={UpdateProfileHandler} className={classes.form}>
         <div>
@@ -91,9 +96,8 @@ const UserDetails = () => {
           <label htmlFor="photoUrl">Profile Photo URL:</label>
           <input type="text" ref={profilePhotoUrlRef} required />
         </div>
-        <div className={classes.actions}>
-          <button>Update</button>
-        </div>
+
+        <button type="submit">Update</button>
       </form>
     </section>
   );

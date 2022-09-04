@@ -7,9 +7,17 @@
   text-align: center;
   border-radius: 0.5rem;
   padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  overflow: auto;
+
   color: #001432;
+}
+.form-container form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  min-width: 40rem;
 }
 
 .form-container-dark {
@@ -25,6 +33,14 @@
   overflow: auto;
   color: blanchedalmond;
 }
+.form-container-dark form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
 
 .display {
   display: flex;
@@ -36,13 +52,26 @@
   border-radius: 0.5rem;
   box-shadow: 0 2px 8px rgba(248, 245, 245, 0.25);
 }
+.display ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
 .display li {
+  display: flex;
+  position: relative;
   font-size: medium;
-
+  list-style: none;
   font-style: italic;
+  align-items: flex-start;
+  justify-content: space-around;
+  min-width: 25rem;
 }
 .display button {
-  position: relative;
+  position: sticky;
+  float: right;
 
   color: rgb(14, 2, 2);
   text-decoration: none;
@@ -73,8 +102,16 @@
   border-radius: 0.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
+.darkDisplay ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
 .darkDisplay li {
   font-size: medium;
+  display: flex;
 
   font-style: italic;
 }
@@ -89,6 +126,7 @@
   width: 5rem;
   height: fit-content;
   margin: 0.3rem;
+  align-self: flex-end;
 }
 
 .darkDisplay button:hover,
@@ -102,11 +140,20 @@
 
 .control {
   border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 50rem;
+  flex-wrap: wrap;
 }
 .control input {
   border-radius: 00.5rem;
   height: 2rem;
   text-align: center;
+  min-width: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .actions button {

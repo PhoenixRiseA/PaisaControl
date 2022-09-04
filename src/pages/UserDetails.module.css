@@ -1,8 +1,12 @@
+.section {
+  height: 33rem;
+}
 .typeOfDetail {
   margin: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-color: black;
 }
 .typeOfDetail h1 {
   flex-direction: row;
@@ -18,11 +22,61 @@
   margin: 2rem;
   display: flex;
   justify-content: center;
+  border-color: black;
+  border-radius: 0.3rem;
+  font-family: fantasy;
   align-items: center;
+  flex-direction: row;
 }
-.actions button {
-  margin-left: 4.5rem;
+.form input {
+  border-radius: 0.3rem;
   height: 2rem;
-  width: 6rem;
+  margin: 1rem;
+}
+.actions {
+  position: sticky;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(14, 2, 2);
+  text-decoration: none;
   border-radius: 0.5rem;
+  background-color: rgb(248, 184, 89);
+  size: 5rem;
+  width: 5rem;
+  height: fit-content;
+  margin: 0.3rem;
+}
+
+.actions :hover,
+.actions :active,
+.actions .active {
+  color: #dee3e9;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid #95bcf0;
+  width: 5rem;
+}
+
+.form button {
+  position: sticky;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(14, 2, 2);
+  text-decoration: none;
+  border-radius: 0.5rem;
+  background-color: rgb(248, 184, 89);
+
+  width: 6.5rem;
+  height: 2rem;
+  margin: 0.3rem;
+}
+
+.form button :hover,
+.form button :active,
+.form button .active {
+  color: #dee3e9;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid #95bcf0;
+  width: 5rem;
 }

@@ -4,10 +4,15 @@ import { NavLink } from "react-router-dom";
 // import AuthContext from "../../store/AuthContext";
 import { authActions } from "../../store/authReducer";
 import { useDispatch, useSelector } from "react-redux/es/exports";
+// import { useState } from "react";
 
 const MainNavigation = () => {
-  // const authCtx = useContext(AuthContext);
   const dispatch = useDispatch();
+
+  const userDetails = useSelector((state) => state.details.details);
+  console.log(userDetails);
+
+  console.log(userDetails.length);
   const theme = useSelector((state) => {
     return state.theme.theme;
   });
@@ -19,7 +24,7 @@ const MainNavigation = () => {
   return (
     <header className={theme === "light" ? classes.header : classes.darkHeader}>
       <ul>
-        {isAuth && <h2>Welcome to expense tracker!</h2>}
+        {<h2>Welcome to expense tracker!</h2>}
         {isAuth && (
           <li>
             <NavLink
@@ -32,12 +37,19 @@ const MainNavigation = () => {
         )}
         {isAuth && (
           <li>
-            Your profile is incomplete
+            <p>
+              {userDetails.length > 2
+                ? `"Your profile is ${
+                    (userDetails.length / 12) * 100
+                  }% complete"`
+                : "Your profile is incomplete"}
+            </p>
+
             <NavLink
               className={(navData) => (navData.isActive ? classes.active : "")}
               to="/home/userDetails"
             >
-              <p> </p>complete now
+              {userDetails.length > 2 ? "update" : "complete now"}
             </NavLink>
           </li>
         )}

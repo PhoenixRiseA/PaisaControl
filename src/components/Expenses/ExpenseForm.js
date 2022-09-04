@@ -232,8 +232,10 @@ const ExpenseForm = () => {
         className={theme === "light" ? classes.display : classes.darkDisplay}
         id="showExpenses"
       >
-        <h3>List of expenses:</h3>
-        <ul id="expenseList">{expenseData}</ul>
+        <ul id="expenseList">
+          <h3>List of expenses:</h3>
+          {expenseData}
+        </ul>
       </div>
       <div
         className={theme === "light" ? classes.display : classes.darkDisplay}

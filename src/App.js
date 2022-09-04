@@ -14,12 +14,12 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<Navigate to="/auth" />} exact></Route>
+        
         {isAuth && <Route path="/home" element={<Home />} />}
         {isAuth && <Route path="/expenses" element={<ExpensePage />} />}
         {!isAuth && <Route path="/auth" element={<AuthPage />} />}
         {isAuth && <Route path="/home/userDetails" element={<UserDetails />} />}
-        <Route path="*" element={<Navigate to="/auth" />}></Route>
+        <Route path="*" element={<Navigate to={isAuth?"/home":"/auth"} />}></Route>
       </Routes>
     </Layout>
   );
